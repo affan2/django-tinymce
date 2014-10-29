@@ -124,13 +124,13 @@ setTimeout(function () {
 }, 0);
 </script>''' % (final_attrs['id'], final_attrs['id'][0:pos], mce_json))
         else:
-            html.append('<script type="text/javascript">tinyMCE.init(%s)</script>' % mce_json)
+            html.append('<script type="text/javascript">/* document.domain = "thebimhub.com";*/ tinyMCE.init(%s)</script>' % mce_json)
 
         return mark_safe('\n'.join(html))
 
     def _media(self):
         if tinymce.settings.USE_COMPRESSOR:
-            js = ['%s%s' % (settings.STATIC_URL.rstrip('/static/'), reverse('tinymce-compressor'))]
+            js = [reverse('tinymce-compressor')]
         else:
             js = [tinymce.settings.JS_URL]
         if tinymce.settings.USE_FILEBROWSER:
