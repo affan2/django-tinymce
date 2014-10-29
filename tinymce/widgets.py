@@ -74,7 +74,7 @@ class TinyMCE(forms.Textarea):
         if mce_config['mode'] == 'exact':
             mce_config['elements'] = final_attrs['id']
         mce_config['strict_loading_mode'] = 1
-        
+
         # Fix for js functions
         js_functions = {}
         for k in ('paste_preprocess','paste_postprocess'):
@@ -90,7 +90,7 @@ class TinyMCE(forms.Textarea):
         for k in js_functions:
             index = mce_json.rfind('}')
             mce_json = mce_json[:index]+', '+k+':'+js_functions[k].strip()+mce_json[index:]
-            
+
 
         html = ['<textarea%s>%s</textarea>' % (flatatt(final_attrs), escape(value))]
         if tinymce.settings.USE_COMPRESSOR:
@@ -103,16 +103,16 @@ class TinyMCE(forms.Textarea):
             }
             compressor_json = json.dumps(compressor_config)
             html.append('<script type="text/javascript">tinyMCE_GZ.init(%s)</script>' % compressor_json)
-            
+
         if pos != -1:
             html.append('''<script type="text/javascript">
 setTimeout(function () {
     var id = '%s';
-    
+
     if (typeof(window._tinymce_inited) == 'undefined') {
         window._tinymce_inited = [];
     }
-    
+
     if (typeof(window._tinymce_inited[id]) == 'undefined') {
         window._tinymce_inited[id] = true;
     } else {
@@ -124,13 +124,13 @@ setTimeout(function () {
 }, 0);
 </script>''' % (final_attrs['id'], final_attrs['id'][0:pos], mce_json))
         else:
-            html.append('<script type="text/javascript">document.domain = "thebimhub.com";tinyMCE.init(%s)</script>' % mce_json)
+            html.append('<script type="text/javascript">tinyMCE.init(%s)</script>' % mce_json)
 
         return mark_safe('\n'.join(html))
 
     def _media(self):
         if tinymce.settings.USE_COMPRESSOR:
-            js = [reverse('tinymce-compressor')]
+            js = ['%s%s' % (settings.STATIC_URL.rstrip('/static/'), reverse('tinymce-compressor'))]
         else:
             js = [tinymce.settings.JS_URL]
         if tinymce.settings.USE_FILEBROWSER:
