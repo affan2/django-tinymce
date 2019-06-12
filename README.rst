@@ -3,6 +3,21 @@ django-tinymce
 
 **django-tinymce** is a Django application that contains a widget to render a form field as a TinyMCE editor.
 
+.. image:: https://img.shields.io/pypi/v/django-tinymce.svg
+        :target: https://pypi.python.org/pypi/django-tinymce
+
+.. image:: https://img.shields.io/pypi/pyversions/django-tinymce.svg
+        :target: https://pypi.python.org/pypi/django-tinymce
+
+.. image:: https://img.shields.io/pypi/dm/django-tinymce.svg
+        :target: https://pypi.python.org/pypi/django-tinymce
+
+.. image:: https://travis-ci.org/aljosa/django-tinymce.svg?branch=master
+        :target: https://travis-ci.org/aljosa/django-tinymce
+
+.. image:: https://coveralls.io/repos/github/aljosa/django-tinymce/badge.svg?branch=master
+        :target: https://coveralls.io/github/aljosa/django-tinymce?branch=master
+
 Quickstart
 ==========
 
@@ -25,10 +40,10 @@ Add tinymce.urls to urls.py for your project:
 
 .. code-block::
 
-    urlpatterns = patterns('',
+    urlpatterns = [
         ...
-        (r'^tinymce/', include('tinymce.urls')),
-    )
+        url(r'^tinymce/', include('tinymce.urls')),
+    ]
 
 In your code:
 
@@ -43,6 +58,12 @@ In your code:
 
 **django-tinymce** uses staticfiles so everything should work as expected, different use cases (like using widget instead of HTMLField) and other stuff is available in documentation.
 
+Releases
+===================
+
+Latest release is 2.6.0. It supports python 2.7, 3.4, 3.5 and Django >= 1.7.
+Previous releases can be found on github, but they are no longer maintained.
+
 Documentation
 =============
 
@@ -51,10 +72,7 @@ http://django-tinymce.readthedocs.org/
 Support and updates
 ===================
 
-You can contact me directly at aljosa.mohorovic@gmail.com, track
-updates at https://twitter.com/maljosa or use github issues.  Be
-persistent and bug me, I often find myself lost in time so ping me if
-you're still waiting for me to answer.
+Use github issues https://github.com/aljosa/django-tinymce/issues
 
 License
 =======
