@@ -24,7 +24,7 @@ except ImportError:
     # Django < 1.10
     from django.core.urlresolvers import reverse
 
-import tinymce.settings
+from . import settings as tinymce_settings
 
 
 class TinyMCE(forms.Textarea):
@@ -60,9 +60,9 @@ class TinyMCE(forms.Textarea):
         return False
 
     def get_mce_config(self, attrs):
-        mce_config = tinymce.settings.DEFAULT_CONFIG.copy()
+        mce_config = tinymce_settings.DEFAULT_CONFIG.copy()
         mce_config.update(get_language_config(self.content_language))
-        if tinymce.settings.USE_FILEBROWSER:
+        if tinymce_settings.USE_FILEBROWSER:
             mce_config['file_browser_callback'] = "djangoFileBrowser"
         mce_config.update(self.mce_attrs)
         if mce_config['mode'] == 'exact':
@@ -82,7 +82,7 @@ class TinyMCE(forms.Textarea):
         assert 'id' in final_attrs, "TinyMCE widget attributes must contain 'id'"
         mce_config = self.get_mce_config(final_attrs)
         mce_json = json.dumps(mce_config)
-        if tinymce.settings.USE_COMPRESSOR:
+        if tinymce_settings.USE_COMPRESSOR:
             compressor_config = {
                 'plugins': mce_config.get('plugins', ''),
                 'themes': mce_config.get('theme', 'advanced'),
@@ -97,19 +97,19 @@ class TinyMCE(forms.Textarea):
 
     def _media(self):
         css = None
-        if tinymce.settings.USE_COMPRESSOR:
+        if tinymce_settings.USE_COMPRESSOR:
             js = [reverse('tinymce-compressor')]
         else:
-            js = [tinymce.settings.JS_URL]
-        if tinymce.settings.USE_FILEBROWSER:
+            js = [tinymce_settings.JS_URL]
+        if tinymce_settings.USE_FILEBROWSER:
             js.append(reverse('tinymce-filebrowser'))
-        if tinymce.settings.USE_EXTRA_MEDIA:
-            if 'js' in tinymce.settings.USE_EXTRA_MEDIA:
-                js += tinymce.settings.USE_EXTRA_MEDIA['js']
+        if tinymce_settings.USE_EXTRA_MEDIA:
+            if 'js' in tinymce_settings.USE_EXTRA_MEDIA:
+                js += tinymce_settings.USE_EXTRA_MEDIA['js']
 
-            if 'css' in tinymce.settings.USE_EXTRA_MEDIA:
-                css = tinymce.settings.USE_EXTRA_MEDIA['css']
-        if tinymce.settings.INCLUDE_JQUERY:
+            if 'css' in tinymce_settings.USE_EXTRA_MEDIA:
+                css = tinymce_settings.USE_EXTRA_MEDIA['css']
+        if tinymce_settings.INCLUDE_JQUERY:
             js.append('django_tinymce/jquery-1.9.1.min.js')
         js.append('django_tinymce/init_tinymce.js')
         return forms.Media(css=css, js=js)
@@ -151,7 +151,7 @@ def get_language_config(content_language=None):
     else:
         config['directionality'] = 'ltr'
 
-    if tinymce.settings.USE_SPELLCHECKER:
+    if tinymce_settings.USE_SPELLCHECKER:
         config['spellchecker_rpc_url'] = reverse('tinymce-spellcheck')
 
     return config

@@ -6,7 +6,7 @@ from mock import patch
 
 from django.test import TestCase, RequestFactory
 
-from tinymce.compressor import gzip_compressor
+from .. compressor import gzip_compressor
 
 
 class TestCompressor(TestCase):

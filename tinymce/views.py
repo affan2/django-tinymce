@@ -4,6 +4,8 @@
 import json
 import logging
 
+from .compressor import gzip_compressor
+
 import django
 if django.VERSION < (2,):  # pragma: no cover
     import warnings
@@ -20,8 +22,6 @@ try:
 except ImportError:
     # Django < 1.10
     from django.core.urlresolvers import reverse
-
-from tinymce.compressor import gzip_compressor
 
 try:
     import enchant

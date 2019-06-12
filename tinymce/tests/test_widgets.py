@@ -7,19 +7,19 @@ from django.test import TestCase
 from django.test.utils import override_settings
 from django.utils.translation import override
 
-import tinymce.settings
-from tinymce.widgets import get_language_config, TinyMCE
+from .. import settings as tinymce_settings
+from .. widgets import get_language_config, TinyMCE
 
 
 @contextmanager
 def override_tinymce_settings(settings_dict):
     saved_values = {}
     for setting, value in settings_dict.items():
-        saved_values[setting] = getattr(tinymce.settings, setting)
-        setattr(tinymce.settings, setting, value)
+        saved_values[setting] = getattr(tinymce_settings, setting)
+        setattr(tinymce_settings, setting, value)
     yield
     for setting in settings_dict.keys():
-        setattr(tinymce.settings, setting, saved_values[setting])
+        setattr(tinymce_settings, setting, saved_values[setting])
 
 
 @override_settings(LANGUAGES=[('en', 'English')])
@@ -51,13 +51,14 @@ class TestWidgets(TestCase):
         self.assertEqual(config, config_ok)
 
     def test_content_language(self):
-        config = get_language_config('ru-ru')
+        config = get_language_config('en')
         config_ok = {
             'spellchecker_languages': 'English=en',
             'directionality': 'ltr',
             'language': 'en',
             'spellchecker_rpc_url': '/tinymce/spellchecker/'
         }
+        import pdb;pdb.set_trace()
         self.assertEqual(config, config_ok)
 
     def test_tinymce_widget(self):
