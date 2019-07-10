@@ -58,7 +58,6 @@ class TestWidgets(TestCase):
             'language': 'en',
             'spellchecker_rpc_url': '/tinymce/spellchecker/'
         }
-        import pdb;pdb.set_trace()
         self.assertEqual(config, config_ok)
 
     def test_tinymce_widget(self):
