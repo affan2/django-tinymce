@@ -14,11 +14,11 @@ from .. widgets import get_language_config, TinyMCE
 @contextmanager
 def override_tinymce_settings(settings_dict):
     saved_values = {}
-    for setting, value in settings_dict.items():
+    for setting, value in list(settings_dict.items()):
         saved_values[setting] = getattr(tinymce_settings, setting)
         setattr(tinymce_settings, setting, value)
     yield
-    for setting in settings_dict.keys():
+    for setting in list(settings_dict.keys()):
         setattr(tinymce_settings, setting, saved_values[setting])
 
 

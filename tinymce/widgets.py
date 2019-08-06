@@ -5,7 +5,7 @@
 This TinyMCE widget was copied and extended from this code by John D'Agostino:
 http://code.djangoproject.com/wiki/CustomWidgetsTinyMCE
 """
-from __future__ import unicode_literals
+
 
 from collections import OrderedDict
 import json
@@ -137,7 +137,7 @@ def get_language_config(content_language=None):
             lang_names[lang[:2]] = []
         lang_names[lang[:2]].append(_(name))
     sp_langs = []
-    for lang, names in lang_names.items():
+    for lang, names in list(lang_names.items()):
         if lang == content_language:
             default = '+'
         else:
